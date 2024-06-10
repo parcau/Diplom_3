@@ -4,10 +4,11 @@ from pages.feed_orders_page import FeedOrders
 from pages.login_page import LoginPage
 from pages.personal_cabinet_page import PersonalCabinet
 import stellar_burgers_api
+from helper import UserFactory
 
 
 class TestFeedOrders:
-    @allure.step("Проверяем, что при нажатии на заказ открываются подробности")
+    @allure.title("Проверяем, что при нажатии на заказ открываются подробности")
     @allure.description(
         "Переходим в Ленту закзов, нажимаем на заказ, проверяем, что всплывающее окно с информацией открылось"
     )
@@ -21,11 +22,12 @@ class TestFeedOrders:
 
         assert feed_orders.get_availability_active_info_order_window() == True
 
-    @allure.step("Проверяем, что счетчик Выполнено за сегодня увеличивается")
+    @allure.title("Проверяем, что счетчик Выполнено за сегодня увеличивается")
     @allure.description(
         "Создаем пользователя, авторизуемся, фиксируем число в счетчике выполнено за сегодня, оформляем заказ, проверяем, что счетчик увеличился"
     )
-    def test_increase_counter_completed_for_today(self, driver, new_user):
+    def test_increase_counter_completed_for_today(self, driver):
+        new_user = UserFactory.generate_new_user()
         auth_user = stellar_burgers_api.CreateUserApi.create_user(new_user)
         email = new_user["email"]
         password = new_user["password"]
@@ -52,13 +54,14 @@ class TestFeedOrders:
 
         assert feed_orders.get_quantity_counter_completed_today() > current_quantity
 
-    @allure.step(
+    @allure.title(
         "Проверяем, что заказы из Истории заказов отобрабражаются в Ленте заказов"
     )
     @allure.description(
         "Создаем пользователя, авторизуемся, оформляем заказ, переходим в Историю заказов и проверяем что этот заказ есть в Ленте заказво"
     )
-    def test_user_orders_history_displayed_on_feed_orders(self, driver, new_user):
+    def test_user_orders_history_displayed_on_feed_orders(self, driver):
+        new_user = UserFactory.generate_new_user()
         auth_user = stellar_burgers_api.CreateUserApi.create_user(new_user)
         email = new_user["email"]
         password = new_user["password"]
@@ -86,11 +89,12 @@ class TestFeedOrders:
 
         assert expected_result in feed_orders.get_orders_list()
 
-    @allure.step("Проверяем, что счетчик Выполнено за все время увеличивается")
+    @allure.title("Проверяем, что счетчик Выполнено за все время увеличивается")
     @allure.description(
         "Создаем пользователя, авторизуемся, фиксируем число в счетчике выполнено за все время, оформляем заказ, проверяем, что счетчик увеличился"
     )
-    def test_increase_counter_completed_for_all_time(self, driver, new_user):
+    def test_increase_counter_completed_for_all_time(self, driver):
+        new_user = UserFactory.generate_new_user()
         auth_user = stellar_burgers_api.CreateUserApi.create_user(new_user)
         email = new_user["email"]
         password = new_user["password"]
@@ -117,12 +121,12 @@ class TestFeedOrders:
 
         assert feed_orders.get_quantity_counter_completed_all_time() > current_quantity
 
-    # ДОДЕЛАТЬ, ЛОГИКА АССЕРТА НЕВЕРНАЯ
-    @allure.step("Проверяем, что заказ появляется в разделе В работе")
+    @allure.title("Проверяем, что заказ появляется в разделе В работе")
     @allure.description(
         "Создаем пользователя, авторизуемся, оформляем заказ, проверяем, что номер заказа появился в разделе в Работе"
     )
-    def test_completed_order_appears_in_progress_section(self, driver, new_user):
+    def test_completed_order_appears_in_progress_section(self, driver):
+        new_user = UserFactory.generate_new_user()
         auth_user = stellar_burgers_api.CreateUserApi.create_user(new_user)
         email = new_user["email"]
         password = new_user["password"]

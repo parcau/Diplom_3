@@ -3,10 +3,11 @@ import data
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 import stellar_burgers_api
+from helper import UserFactory
 
 
 class TestMainPage:
-    @allure.step("Проверяем переход по кнопке Конструктор")
+    @allure.title("Проверяем переход по кнопке Конструктор")
     @allure.description(
         "Переходим на страницу авторизации, нажимаем кнопку Конструктор, проверяем, что вернулись на главную страницу"
     )
@@ -17,7 +18,7 @@ class TestMainPage:
 
         assert main_page.get_current_url() == data.Urls.STELLAR_BURGERS
 
-    @allure.step("Проверяем переход по кнопке Лента заказов")
+    @allure.title("Проверяем переход по кнопке Лента заказов")
     @allure.description(
         "Нажимаем на кнопку Лента заказов, проверяем, что перешли на нужную страницу"
     )
@@ -27,7 +28,7 @@ class TestMainPage:
 
         assert main_page.get_current_url() == data.Urls.FEED_ORDERS_PAGE
 
-    @allure.step("Проверяем, что появится информация при клике по ингредиенту")
+    @allure.title("Проверяем, что появится информация при клике по ингредиенту")
     @allure.description(
         "Кликаем по флюоресцентной булке, проверяем что появилось с окной с информацией об ингредиенте"
     )
@@ -37,7 +38,7 @@ class TestMainPage:
 
         assert main_page.get_name_by_active_bun() == "Детали ингредиента"
 
-    @allure.step("Проверяем работу закрытия окна с инфо о ингредиенте")
+    @allure.title("Проверяем работу закрытия окна с инфо о ингредиенте")
     @allure.description(
         "Кликаем по флюоресцентной булке, нажимаем на крестик, проверяем, что окно закрылось"
     )
@@ -49,7 +50,7 @@ class TestMainPage:
 
         assert main_page.get_availability_active_info_ingredient_window() == False
 
-    @allure.step("Проверяем перетаскивание ингредиента в заказ")
+    @allure.title("Проверяем перетаскивание ингредиента в заказ")
     @allure.description(
         "Переносим булочку в заказ, проверяем, что счетчик у выбранного ингредиента увеличился"
     )
@@ -59,11 +60,12 @@ class TestMainPage:
 
         assert main_page.get_quantity_ingredients_per_order() > 0
 
-    @allure.step("Проверяем, что авторизованный пользователь может оформить заказ")
+    @allure.title("Проверяем, что авторизованный пользователь может оформить заказ")
     @allure.description(
         "Авторизуемся в системе, добавляем булочку в заказ, нажимаем кнопку Оформить заказ, проверяем, что оформление заказ прошло успешно"
     )
-    def test_create_order_by_auth_user(self, driver, new_user):
+    def test_create_order_by_auth_user(self, driver):
+        new_user = UserFactory.generate_new_user()
         auth_user = stellar_burgers_api.CreateUserApi.create_user(new_user)
         email = new_user["email"]
         password = new_user["password"]

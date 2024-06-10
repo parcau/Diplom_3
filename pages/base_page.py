@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver import ActionChains
 
 
 class BasePage:
@@ -26,3 +27,8 @@ class BasePage:
     def wait_invisibility_element(self, locator):
         WebDriverWait(self.driver, 3).until(EC.invisibility_of_element_located(locator))
         return self.driver.find_element(*locator)
+
+    def drag_and_drop(self, source_element, target_element):
+        actions = ActionChains(self.driver)
+        return actions.drag_and_drop(source_element, target_element).perform()
+

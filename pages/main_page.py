@@ -1,5 +1,4 @@
 import allure
-from selenium.webdriver import ActionChains
 import locators.main_page_locators
 from pages.base_page import BasePage
 
@@ -69,8 +68,7 @@ class MainPage(BasePage):
         target_element = self.find_element(
             locators.main_page_locators.ADD_TO_ORDER_FIELD
         )
-        actions = ActionChains(self.driver)
-        return actions.drag_and_drop(source_element, target_element).perform()
+        return self.drag_and_drop(source_element, target_element)
 
     @allure.step("Получаем кол-во добавленного ингредиента в заказ")
     def get_quantity_ingredients_per_order(self):

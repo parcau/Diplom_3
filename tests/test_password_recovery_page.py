@@ -6,7 +6,7 @@ from pages.password_recovery_page import PasswordRecovery
 
 
 class TestPasswordRecovery:
-    @allure.step("Проверяем работоспособность конопки Восстановить пароль")
+    @allure.title("Проверяем работоспособность конопки Восстановить пароль")
     @allure.description(
         "Нажимаем кнопку Войти в аккаунт, нажимаем кнопку Восстановить пароль, проверяем, что перешли на странцу восстановления пароля"
     )
@@ -21,7 +21,7 @@ class TestPasswordRecovery:
 
         assert password_recovery_page.current_url() == data.Urls.FORGOT_PASSWORD_PAGE
 
-    @allure.step(
+    @allure.title(
         "Проверяем работоспособность кнопки Восстановить на странице восстановления пароля"
     )
     @allure.description(
@@ -40,7 +40,7 @@ class TestPasswordRecovery:
 
         assert password_recovery_page.current_url() == data.Urls.RESET_PASSWORD_PAGE
 
-    @allure.step("Проверяем, что клик по кнопке показать/скрыть пароль работает")
+    @allure.title("Проверяем, что клик по кнопке показать/скрыть пароль работает")
     @allure.description(
         "В форме восстановления пароля, нажимаем на кнопку показать/скрыть пароль. Проверяем, что поле становится активным и подсвечиватеся"
     )
